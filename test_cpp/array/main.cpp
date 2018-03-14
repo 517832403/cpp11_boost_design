@@ -1,5 +1,9 @@
 #include <iostream>
-
+struct A
+{
+	A(int a){}
+	//A(const int a){}
+};
 int main()
 {
 	const char arr[]="abcdef" ;
