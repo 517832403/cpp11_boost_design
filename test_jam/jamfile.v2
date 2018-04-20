@@ -1,0 +1,73 @@
+import path ;
+import os ;
+import modules ;
+
+
+path-constant CWD : . ;
+path-constant BOOST_ROOT : [ os.environ BOOST_ROOT ] ;
+
+#强调其他模块一致
+modules.poke : BOOST_ROOT : $(BOOST_ROOT) ;
+
+project
+	: requirements
+	  <implicit-dependency>/boost//headers
+	  <include>$(CWD)/include
+	 <debug-symbols>on
+	 <threading>multi
+	 <cxxflags>-std=c++11
+	 <define>DEFAULT_LOG_LEVEL=0
+	: usage-requirements
+	  <include>$(CWD)/include
+	: default-build debug
+	  <link>shared
+	: build-dir bin
+	;
+
+alias dependencies
+	: xxx.so
+	  xxx1.so
+	;
+
+use-project /boost : $(BOOST_ROOT) ;
+
+explicit unittest ;
+alias unittest : [ MATCH (.*/unittest) : [ glob-tree Jamfile.v2 ] ] ;
+
+lib test_1 
+	: [ glob-tree *.cpp : unittest ]
+		/test//test
+		dependencies	
+	: <implicit-dependencies>/boost//headers
+	:
+	:<library>dependencies
+	 <include>$(CWD)/include
+	;
+
+exe test
+	: [ path.glob-tree . : *.cpp ]
+		/test//test
+		dependencies
+		$(PATH_LIB)/xxx.so
+	;
+
+explicit install ;
+alias install :
+	[ install install_bin 
+		: dxs
+		: <install-type>EXE
+		  <location>$(INSTALL_PATH)/bin
+		  <install-dependencies>on
+	]
+	[ install install_data
+	 	: $(CWD)/data/xxx.xml
+		: <location>$(INSTALL_PATH)/data/
+	 
+	]
+	[ install install_lib
+		: [ glob-tree libtest_1.so ] #path
+		: <install-type>LIB
+		  <location>$(INSTALL_PATH)/lib/
+	]
+	;
+
