@@ -9,6 +9,8 @@ class Base
 
 	public:
 		static const std::string name ;
+		static const int32_t name2=123 ;
+		//static int32_t name1 = 1;
 };
 const std::string Base::name="luojian" ; 
 
