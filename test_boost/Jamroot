@@ -23,6 +23,13 @@ alias dependencies
 	  /boost/regex//boost_regex
 	;
 	  
+exe write_json_array
+	: $(CWD)/src/write_json_array.cpp
+	  dependencies
+	: <implicit-dependency>/boost//headers
+	  <debug-symbols>on
+	;
+
 
 exe directory
 	: $(CWD)/src/test_directory.cpp
