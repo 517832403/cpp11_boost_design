@@ -1,0 +1,24 @@
+import os ;
+import path ;
+path-constant BOOST_ROOT : [ os.environ BOOST_ROOT ] ;
+path-constant CWD : . ;
+
+use-project /boost : $(BOOST_ROOT) ;
+
+project
+	: requirements
+		<cxxflags>-std=c++11
+		<include>$(CWD)/include
+	: default-build debug
+	  <link>shared
+	: build-dir bin
+	;
+
+exe test_serial_processor
+	: [ path.glob-tree . : *.cpp ]
+	  /boost/chrono//boost_chrono
+	  /boost/system//boost_system
+	: <include>$(CWD)/include
+	  <implicit-dependency>/boost//headers
+	  <linkflags>-lpthread
+	;
