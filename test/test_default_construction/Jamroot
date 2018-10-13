@@ -1,0 +1,29 @@
+#import path ;
+import os ;
+path-constant BOOST_ROOT : [ os.environ BOOST_ROOT ] ;
+path-constant CWD : . ;
+
+project 
+	: requirements
+	  <implicit-dependency>/boost//headers
+	  <debug-symbols>on
+	  <cxxflags>-std=c++11
+	: default-build 
+           debug
+	  <link>shared
+	  <threading>multi
+	: build-dir bin
+	;
+
+use-project /boost : $(BOOST_ROOT) ;
+alias dependencies
+	: /boost/filesystem//boost_filesystem
+	  /boost/thread//boost_thread
+	  /boost/locale//boost_locale
+	  /boost/regex//boost_regex
+	  /boost/system//boost_system
+	;
+	  
+
+# [ glob-tree *.cpp : unittest ]
+# [ glob-tree common.so external.so internal.so ]	

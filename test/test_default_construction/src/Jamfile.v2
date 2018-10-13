@@ -1,0 +1,39 @@
+import os ;
+import path ;
+
+path-constant CWD : . ;
+path-constant BOOST_PATH : /home/luojian/work/boost_1_65_0 ;
+
+local BOOST_ROOT = [ os.environ BOOST_ROOT ] ;
+if ! $(BOOST_ROOT)
+{
+	BOOST_ROOT = $(BOOST_PATH) ;
+}
+
+modules.poke : BOOST_ROOT : $(BOOST_ROOT) ;
+
+use-project /boost : $(BOOST_ROOT) ;
+
+alias dependencies
+	: /boost/thread//boost_thread
+	  /boost/filesystem//boost_filesystem
+	 /boost/system//boost_system
+	;
+
+project test
+	: requirements
+	 <cxxflags>-std=c++11
+	: default-build
+	  release
+	  <threading>multi
+	;
+
+exe test_default_constructor
+        : test_default_constructor.cpp
+        : <include>./ 
+	<implicit-dependency>/boost//headers
+          <debug-symbols>on
+	: <include>./
+	  <define>DEBUG_TEST
+        ;
+
