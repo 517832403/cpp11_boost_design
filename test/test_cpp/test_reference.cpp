@@ -19,5 +19,6 @@ int main()
 
 	int& b = tmp.Add() ;
        	std::cout<<"b:"<<b<<"a:"<<++tmp.Add()<<tmp.Add()<<std::endl;
+	std::cout<<(uint64_t)-1<<std::endl;
 	return 0 ;	
 }
