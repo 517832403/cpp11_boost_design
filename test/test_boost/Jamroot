@@ -61,3 +61,13 @@ exe regex
    	  <debug-symbols>on
 	: <library>dependencies
 	;
+
+exe boost_pp
+        : $(CWD)/src/boost_pp.cpp
+          dependencies
+        : <threading>multi
+          <implicit-dependency>/boost//headers
+          <debug-symbols>on
+        : <library>dependencies
+        ;
+
