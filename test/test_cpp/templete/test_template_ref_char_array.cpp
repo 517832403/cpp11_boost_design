@@ -4,6 +4,15 @@
 #include <stdint.h>
 #include <memory>
 #include <cstring>
+
+typedef char Text_def[50] ;
+
+template<size_t Size>
+inline bool operator < (const char (&from)[Size],const char(&to)[Size])
+{
+	return true;
+}
+
 template<uint32_t Size>
 inline void CopyToArray(const std::string & from,char (&to)[Size])
 {
@@ -18,9 +27,9 @@ inline void CopyToArray(const std::string & from,char (&to)[Size])
 int main()
 {
 	std::string str("1234556789");
-	char b[12];
+	Text_def b;
 	CopyToArray(str,b);
-	for(int i=0;i<12;++i)
+	for(int i=0;i<50;++i)
 	{
 		printf("%c",b[i]);
 	}	
