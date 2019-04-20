@@ -10,4 +10,7 @@
 
 #define WMB() asm volatile("sfence":::"memory")
 
+// 强制编译器生成一条从内存读取变量x的cpu指令
+#define ONCE(x) (*volatile decltype(x)*)&(x))
+
 
