@@ -71,3 +71,12 @@ exe boost_pp
         : <library>dependencies
         ;
 
+exe async_connect
+	: $(CWD)/src/async_connect.cpp
+		dependencies
+	: <threading>multi
+	  <implicit-dependency>/boost//headers
+	  <debug-symbols>on
+	: <library>dependencies
+	;
+
